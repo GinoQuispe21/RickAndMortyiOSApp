@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E3E17462A9DC74C00CE38F8 /* RMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E17452A9DC74C00CE38F8 /* RMConstants.swift */; };
 		7E9BBD392A92869900A027E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9BBD382A92869900A027E9 /* AppDelegate.swift */; };
 		7E9BBD3B2A92869900A027E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9BBD3A2A92869900A027E9 /* SceneDelegate.swift */; };
 		7E9BBD3D2A92869900A027E9 /* RMTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9BBD3C2A92869900A027E9 /* RMTabViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E3E17452A9DC74C00CE38F8 /* RMConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMConstants.swift; sourceTree = "<group>"; };
 		7E9BBD352A92869900A027E9 /* RickAndMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E9BBD382A92869900A027E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E9BBD3A2A92869900A027E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				7E9BBD432A92869B00A027E9 /* LaunchScreen.storyboard */,
 				7E9BBD382A92869900A027E9 /* AppDelegate.swift */,
 				7E9BBD3A2A92869900A027E9 /* SceneDelegate.swift */,
+				7E3E17452A9DC74C00CE38F8 /* RMConstants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E3E17462A9DC74C00CE38F8 /* RMConstants.swift in Sources */,
 				7ECB13892A9C5AF50023C5B8 /* RMEndpoints.swift in Sources */,
 				7EFC7DE22A9717E3005AC39C /* RMEpisode.swift in Sources */,
 				7E9BBD3D2A92869900A027E9 /* RMTabViewController.swift in Sources */,

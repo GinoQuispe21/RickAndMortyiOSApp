@@ -11,7 +11,7 @@ import Foundation
 final class RMService {
     
     /// Shared singleton instance
-    public let shared = RMService()
+    static let shared = RMService()
     
     /// Privatized constructir
     private init() {}
@@ -19,8 +19,13 @@ final class RMService {
     /// Send Rick and Morty API Call
     /// - Parameters:
     ///   - request: Request instance
+    ///   - type: The type of object we expected to get back
     ///   - completion: Callback with data or error
-    public func execute(_ request: RMRequest, completion: @escaping () -> Void) {
+    public func execute<T: Decodable>(
+        _ request: RMRequest,
+        expecting type: T.Type,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
          
     }
     
