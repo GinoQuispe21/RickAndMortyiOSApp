@@ -30,7 +30,8 @@ final class RMCharacterListView: UIView {
         // Register cell
         collectionView.register(
             RMCharacterCollectionViewCell.self,
-            forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
+            forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier
+        )
         return collectionView
     }()
     
@@ -45,6 +46,8 @@ final class RMCharacterListView: UIView {
         addContraints()
         spinner.startAnimating()
         setupCollectionView()
+        viewModel.delegate = self
+        viewModel.fetchAllCharacters()
     }
     
     required init?(coder: NSCoder) {
@@ -69,15 +72,19 @@ final class RMCharacterListView: UIView {
     private func setupCollectionView(){
         collectionView.dataSource = viewModel
         collectionView.delegate = viewModel
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 2,
-            execute: {
-                self.spinner.stopAnimating()
-                self.collectionView.isHidden = false
-                UIView.animate(withDuration: 0.4, animations: {
-                    self.collectionView.alpha = 1
-                })
-            })
     }
 
+}
+
+extension RMCharacterListView: RMCharacterListViewViewModelDelegate {
+
+    func didLoadInitialCharacters() {
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        collectionView.reloadData() // Initial Fetch
+        UIView.animate(withDuration: 0.4, animations: {
+            self.collectionView.alpha = 1
+        })
+    }
+    
 }

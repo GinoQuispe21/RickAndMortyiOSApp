@@ -30,6 +30,13 @@ enum RMCharacterStatus: String, Decodable {
     case dead = "Dead"
     case unknown = "unknown"
     
+    var text: String {
+        switch self {
+        case .alive, .dead: return rawValue
+        case .unknown: return "Unknown"
+        }
+    }
+    
 }
 
 enum RMCharacterGender: String, Decodable {
