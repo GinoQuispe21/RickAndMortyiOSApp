@@ -17,6 +17,7 @@ final class RMCharacterViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Characters"
         setUpView()
+        characterListView.delegate = self
     }
     
     private func setUpView() {
@@ -29,4 +30,16 @@ final class RMCharacterViewController: UIViewController {
         ])
     }
 
+}
+
+extension RMCharacterViewController: RMCharacterListViewDelegate {
+    
+    func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
+        let rmCharacterDetailVVM = RMCharacterDetailViewViewModel(character: character)
+        let rmCharacterDetailVC = RMCharacterDetailViewController(viewModel: rmCharacterDetailVVM)
+        rmCharacterDetailVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(rmCharacterDetailVC, animated: true)
+        
+    }
+    
 }

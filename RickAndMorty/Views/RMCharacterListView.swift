@@ -7,9 +7,20 @@
 
 import UIKit
 
+protocol RMCharacterListViewDelegate: NSObject {
+    
+    func rmCharacterListView(
+        _ characterListView: RMCharacterListView,
+        didSelectCharacter character: RMCharacter
+    )
+    
+}
+
 /// View that handles showing list of characters, loaders, etc
 final class RMCharacterListView: UIView {
 
+    public weak var delegate: RMCharacterListViewDelegate?
+    
     private let viewModel = RMCharacterListViewViewModel()
     
     private let spinner: UIActivityIndicatorView = {
@@ -22,7 +33,7 @@ final class RMCharacterListView: UIView {
     private let collectionView: UICollectionView = {
         // layour for margin
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isHidden = true
         collectionView.alpha = 0 //opacity
@@ -85,6 +96,10 @@ extension RMCharacterListView: RMCharacterListViewViewModelDelegate {
         UIView.animate(withDuration: 0.4, animations: {
             self.collectionView.alpha = 1
         })
+    }
+    
+    func didSelectCharacter(_ rmCharacter: RMCharacter) {
+        delegate?.rmCharacterListView(self, didSelectCharacter: rmCharacter)
     }
     
 }
