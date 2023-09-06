@@ -36,7 +36,7 @@ final class RMCharacterListViewViewModel: NSObject {
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
     
     public var shouldShowMoreIndicator: Bool {
-        return apiInfo?.next != nil 
+        return apiInfo?.next != nil
     }
     
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
@@ -87,6 +87,24 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource {
         let viewModel = cellViewModels[indexPath.row]
         cell.configure(with: viewModel)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter,
+            let footer = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier,
+                for: indexPath
+            ) as? RMFooterLoadingCollectionReusableView else {
+                fatalError("Unsupported")
+            }
+        footer.startAnimating()
+        return footer
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard shouldShowMoreIndicator else { return .zero }
+        return CGSize(width: collectionView.frame.width, height: 100)
     }
     
 }

@@ -43,6 +43,11 @@ final class RMCharacterListView: UIView {
             RMCharacterCollectionViewCell.self,
             forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier
         )
+        // Register footer for pagination animation
+        collectionView.register(
+            RMFooterLoadingCollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier)
         return collectionView
     }()
     
