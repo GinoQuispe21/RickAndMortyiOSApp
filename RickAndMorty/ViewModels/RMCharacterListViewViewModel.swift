@@ -11,6 +11,7 @@ import UIKit
 protocol RMCharacterListViewViewModelDelegate: NSObject {
     
     func didLoadInitialCharacters()
+    func didLoadMoreCharacters(with newIndexPath: [IndexPath])
     func didSelectCharacter(_ rmCharacter: RMCharacter)
     
 }
@@ -19,6 +20,8 @@ protocol RMCharacterListViewViewModelDelegate: NSObject {
 final class RMCharacterListViewViewModel: NSObject {
     
     public weak var delegate: RMCharacterListViewViewModelDelegate?
+    
+    private var isLoadingData: Bool = false
     
     private var characters: [RMCharacter] = [] {
         didSet {
@@ -50,7 +53,6 @@ final class RMCharacterListViewViewModel: NSObject {
             guard let self = self else { return }
             switch result {
             case .success(let responseModel):
-                dump(responseModel)
                 let results = responseModel.results
                 let info = responseModel.info
                 characters = results
@@ -66,7 +68,47 @@ final class RMCharacterListViewViewModel: NSObject {
     }
     
     /// Pagination if additional characters are needed
-    public func fetchAdditionalCharacters() {}
+    public func fetchAdditionalCharacters(url: URL) {
+        guard !isLoadingData else { return }
+        isLoadingData = true
+        print("Fetching more characters for pagination")
+        guard let request = RMRequest(url: url) else {
+            print("Failed to create request")
+            return
+        }
+        RMService.shared.execute(
+            request,
+            expecting: RMGetAllCharactersResponse.self,
+            completion: { [weak self] result in
+                guard let self = self else { return }
+                isLoadingData = false
+                switch result {
+                case.success(let responseModel):
+                    print(responseModel)
+                    let moreResults = responseModel.results
+                    let info = responseModel.info
+                    apiInfo = info
+                    
+                    let originalCount = characters.count
+                    let newCount = moreResults.count
+                    let total = originalCount + newCount
+                    let startingIndex = total - newCount
+                    let indexPathsAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
+                        return IndexPath(row: $0, section: 0)
+                    })
+                    characters.append(contentsOf: moreResults)
+                    DispatchQueue.main.async {
+                        self.delegate?.didLoadMoreCharacters(
+                            with: indexPathsAdd
+                        )
+                        self.isLoadingData = false
+                    }
+                case.failure(let error):
+                    print(error)
+                }
+            }
+        )
+    }
     
 }
 
@@ -128,7 +170,28 @@ extension RMCharacterListViewViewModel: UICollectionViewDelegate, UICollectionVi
 extension RMCharacterListViewViewModel: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard shouldShowMoreIndicator else { return }
+        guard shouldShowMoreIndicator,
+              !isLoadingData,
+              !cellViewModels.isEmpty,
+              let nextUrlString = apiInfo?.next,
+              let url = URL(string: nextUrlString)
+        else {
+            return
+        }
+        Timer.scheduledTimer(
+            withTimeInterval: 0.2,
+            repeats: false,
+            block: { [weak self] t in
+                guard let self = self else { return }
+                let offset = scrollView.contentOffset.y
+                let totalContentHeight = scrollView.contentSize.height
+                let totalScrollViewFixedHeight = scrollView.frame.size.height
+                if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
+                    fetchAdditionalCharacters(url: url)
+                }
+                t.invalidate()
+            }
+        )
     }
     
 }
