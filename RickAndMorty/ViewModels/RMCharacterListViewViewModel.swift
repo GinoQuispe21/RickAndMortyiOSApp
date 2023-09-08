@@ -31,7 +31,9 @@ final class RMCharacterListViewViewModel: NSObject {
                     characterStatus: character.status,
                     characterImageUrl: URL(string: character.image)
                 )
-                cellViewModels.append(viewModel)
+                if !cellViewModels.contains(viewModel) {
+                    cellViewModels.append(viewModel)
+                }
             }
         }
     }
@@ -81,10 +83,8 @@ final class RMCharacterListViewViewModel: NSObject {
             expecting: RMGetAllCharactersResponse.self,
             completion: { [weak self] result in
                 guard let self = self else { return }
-                isLoadingData = false
                 switch result {
                 case.success(let responseModel):
-                    print(responseModel)
                     let moreResults = responseModel.results
                     let info = responseModel.info
                     apiInfo = info
@@ -92,11 +92,12 @@ final class RMCharacterListViewViewModel: NSObject {
                     let originalCount = characters.count
                     let newCount = moreResults.count
                     let total = originalCount + newCount
-                    let startingIndex = total - newCount
+                    let startingIndex = total - newCount - 1
                     let indexPathsAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
                         return IndexPath(row: $0, section: 0)
                     })
                     characters.append(contentsOf: moreResults)
+                    print(characters.count)
                     DispatchQueue.main.async {
                         self.delegate?.didLoadMoreCharacters(
                             with: indexPathsAdd
@@ -105,6 +106,7 @@ final class RMCharacterListViewViewModel: NSObject {
                     }
                 case.failure(let error):
                     print(error)
+                    isLoadingData = false
                 }
             }
         )

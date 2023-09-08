@@ -27,7 +27,7 @@ final class RMRequest {
             })
         }
         if !queryParameters.isEmpty {
-            string += "/"
+            string += "?"
             let argumentString = queryParameters.compactMap({
                 guard let value = $0.value else { return nil }
                 return "\($0.name)=\(value)"
@@ -72,10 +72,16 @@ final class RMRequest {
             }
         } else if trimed.contains("?") {
             let components = trimed.components(separatedBy: "?")
-            if !components.isEmpty {
+            if !components.isEmpty, components.count >= 2 {
                 let endpointString = components[0]
+                let queryItemString = components[1]
+                let queryItems: [URLQueryItem] = queryItemString.components(separatedBy: "&").compactMap {
+                    guard $0.contains("=") else { return nil }
+                    let parts = $0.components(separatedBy: "=")
+                    return URLQueryItem(name: parts[0], value: parts[1])
+                }
                 if let rmEndpoint = RMEndpoint(rawValue: endpointString) {
-                    self.init(endpoint: rmEndpoint)
+                    self.init(endpoint: rmEndpoint, queryParameters: queryItems)
                     return
                 }
             }
