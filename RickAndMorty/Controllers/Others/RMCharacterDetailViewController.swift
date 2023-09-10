@@ -11,6 +11,8 @@ final class RMCharacterDetailViewController: UIViewController {
 
     private let viewModel: RMCharacterDetailViewViewModel
     
+    private let detailView = RMCharacterDetailView()
+    
     init(viewModel: RMCharacterDetailViewViewModel) {
         self.viewModel = viewModel
         super.init(
@@ -26,18 +28,26 @@ final class RMCharacterDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         title = viewModel.title
-        // Do any additional setup after loading the view.
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(didTapShare))
+        view.addSubview(detailView)
+        addContraints()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func addContraints() {
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            detailView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            detailView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+        ])
     }
-    */
-
+    
+    @objc
+    private func didTapShare() {
+        // Share character info
+    }
+    
 }
