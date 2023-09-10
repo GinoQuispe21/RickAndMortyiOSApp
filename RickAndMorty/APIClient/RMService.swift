@@ -26,7 +26,6 @@ final class RMService {
         expecting type: T.Type,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
-        print("API CALL", request.url)
         guard let urlRequest = requestMethod(from: request) else {
             completion(.failure(RMServiceError.failedToCreateRequest))
             return

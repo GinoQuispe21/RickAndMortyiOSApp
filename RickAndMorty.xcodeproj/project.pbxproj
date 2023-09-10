@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E2235982AAE5B350097878E /* RMImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2235972AAE5B350097878E /* RMImageLoader.swift */; };
 		7E3E17462A9DC74C00CE38F8 /* RMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E17452A9DC74C00CE38F8 /* RMConstants.swift */; };
 		7E3E17482A9DCAA300CE38F8 /* RMError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E17472A9DCAA300CE38F8 /* RMError.swift */; };
 		7E48C7212AA83743000F2B2D /* RMFooterLoadingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E48C7202AA83743000F2B2D /* RMFooterLoadingCollectionReusableView.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E2235972AAE5B350097878E /* RMImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMImageLoader.swift; sourceTree = "<group>"; };
 		7E3E17452A9DC74C00CE38F8 /* RMConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMConstants.swift; sourceTree = "<group>"; };
 		7E3E17472A9DCAA300CE38F8 /* RMError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMError.swift; sourceTree = "<group>"; };
 		7E48C7202AA83743000F2B2D /* RMFooterLoadingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMFooterLoadingCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		7EFC7DDA2A9712BD005AC39C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				7E2235972AAE5B350097878E /* RMImageLoader.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				7EFC7DEC2A9718A3005AC39C /* RMSettingsViewController.swift in Sources */,
 				7ECB13842A9C276E0023C5B8 /* RMService.swift in Sources */,
 				7E6C1A9E2AA3032200F53132 /* RMCharacterListView.swift in Sources */,
+				7E2235982AAE5B350097878E /* RMImageLoader.swift in Sources */,
 				7EFC7DE82A971880005AC39C /* RMCharacterViewController.swift in Sources */,
 				7E6C1A9C2AA3002C00F53132 /* RMGetAllCharactersResponse.swift in Sources */,
 				7EFC7DDE2A9717BD005AC39C /* RMLocation.swift in Sources */,

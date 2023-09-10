@@ -73,7 +73,6 @@ final class RMCharacterListViewViewModel: NSObject {
     public func fetchAdditionalCharacters(url: URL) {
         guard !isLoadingData else { return }
         isLoadingData = true
-        print("Fetching more characters for pagination")
         guard let request = RMRequest(url: url) else {
             print("Failed to create request")
             return
