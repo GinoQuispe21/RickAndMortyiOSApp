@@ -11,6 +11,14 @@ final class RMCharacterDetailViewViewModel {
     
     private var character: RMCharacter
     
+    enum SectionType: CaseIterable {
+        case photo
+        case information
+        case episodes
+    }
+    
+    public let sections = SectionType.allCases
+    
     public var requestUrl: URL? {
         return  URL(string: character.url)
     }
